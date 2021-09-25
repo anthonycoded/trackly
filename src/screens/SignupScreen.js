@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
+import { Context as AuthContext } from "../context/authContext";
 
-const SignupScreen = ({ navigation }) => {
+const SignupScreen = () => {
+  const { state, signup } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  console.log(state);
   return (
     <View style={styles.container}>
       <Text h3 style={{ marginBottom: 20 }}>
@@ -28,9 +31,10 @@ const SignupScreen = ({ navigation }) => {
           secureTextEntry
         />
       </View>
+      {state.error ? <Text>{state.error}</Text> : null}
       <Button
-        title="Sign-In"
-        onPress={() => navigation.navigate("Signin")}
+        title="Sign-up"
+        onPress={() => signup({ email, password })}
       ></Button>
     </View>
   );
