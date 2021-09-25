@@ -5,13 +5,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider as AuthProvider } from "./src/context/authContext";
 import AuthNavigator from "./src/navigation/AuthNavigator";
 import BottomTabNavigator from "./src/navigation/BottomTabNavigator";
-
+import { navigationRef } from "./src/navigationRef";
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <AuthProvider>
-      <NavigationContainer screenOptions={{}}>
+      <NavigationContainer screenOptions={{}} ref={navigationRef}>
         <Stack.Navigator
           initialRouteName="Search"
           screenOptions={{
@@ -24,7 +24,7 @@ function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="BottomTab"
+            name="MainFlow"
             component={BottomTabNavigator}
             options={{ headerShown: false }}
           />
