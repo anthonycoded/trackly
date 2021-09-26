@@ -5,7 +5,15 @@ import AuthButtons from "../components/AuthButtons";
 import { Context as AuthContext } from "../context/authContext";
 
 const SignupScreen = ({ navigation }) => {
-  const { state, signup } = useContext(AuthContext);
+  const { state, signup, clearError } = useContext(AuthContext);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      clearError;
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   console.log(state);
   return (

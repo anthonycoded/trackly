@@ -6,7 +6,15 @@ import AuthForm from "../components/AuthForm";
 import AuthButtons from "../components/AuthButtons";
 
 const SigninScreen = ({ navigation }) => {
-  const { state, signin } = useContext(AuthContext);
+  const { state, signin, clearError } = useContext(AuthContext);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      clearError;
+    });
+
+    return unsubscribe;
+  }, [navigation]);
   return (
     <View style={styles.container}>
       <AuthForm
