@@ -1,41 +1,25 @@
 import React, { useContext, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Text, Input, Button } from "react-native-elements";
+import AuthForm from "../components/AuthForm";
+import AuthButtons from "../components/AuthButtons";
 import { Context as AuthContext } from "../context/authContext";
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const { state, signup } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   console.log(state);
   return (
     <View style={styles.container}>
-      <Text h3 style={{ marginBottom: 20 }}>
-        Sign up for Tracker
-      </Text>
-      <View style={styles.inputContainer}>
-        <Input
-          label="Email"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <Input
-          label="Password"
-          value={password}
-          onChangeText={setPassword}
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry
-        />
-      </View>
-      {state.error ? <Text>{state.error}</Text> : null}
-      <Button
-        title="Sign-up"
-        onPress={() => signup({ email, password })}
-      ></Button>
+      <AuthForm
+        headerText="Sign Up for Trackly"
+        buttonText="Sign-up"
+        onSubmit={signup}
+        error={state.error}
+      ></AuthForm>
+      <AuthButtons
+        text="Already have an account? Sign in instead."
+        routeName="Signin"
+      ></AuthButtons>
     </View>
   );
 };
@@ -46,9 +30,6 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     marginBottom: 200,
-  },
-  inputContainer: {
-    marginVertical: 10,
   },
 });
 
