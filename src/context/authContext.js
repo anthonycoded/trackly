@@ -7,7 +7,7 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case "add_error":
       return { ...state, error: action.payload };
-    case "signup":
+    case "signin":
       return { error: "", token: action.payload };
     default:
       return state;
@@ -27,7 +27,7 @@ const signup =
 
       //After sign up, Modify state with token
       await AsyncStorage.setItem("token", response.data.token);
-      dispatch({ type: "signup", payload: response.data.token });
+      dispatch({ type: "signin", payload: response.data.token });
 
       //Navigate to Main Flow
       navigationRef.navigate("MainFlow");
@@ -42,13 +42,31 @@ const signup =
   };
 
 //signin action
-const signin = (dispatch) => {
-  return ({ email, Password }) => {
-    //Make api request to sign in
-    //Sign in Success: Modify state that we are authenticated
-    //Sign in Failed: return error
+const signin =
+  (dispatch) =>
+  async ({ email, password }) => {
+    try {
+      //Make api request to sign in
+      const response = await trackerApi.post("/auth/signin", {
+        email,
+        password,
+      });
+
+      //After sign up, Modify state with token
+      await AsyncStorage.setItem("token", response.data.token);
+      dispatch({ type: "signin", payload: response.data.token });
+
+      //Navigate to Main Flow
+      navigationRef.navigate("MainFlow");
+    } catch (error) {
+      console.log(error);
+      //Sign in Failed: return error
+      dispatch({
+        type: "add_error",
+        payload: "Something went wrong with sign in. Try again",
+      });
+    }
   };
-};
 
 //signout action
 const signout = (dispatch) => {
