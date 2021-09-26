@@ -4,6 +4,7 @@ import createDataContext from "./createDataContext";
 import trackerApi from "../api/tracker";
 
 const authReducer = (state, action) => {
+  ///Modify State
   switch (action.type) {
     case "add_error":
       return { ...state, error: action.payload };
@@ -12,6 +13,8 @@ const authReducer = (state, action) => {
 
     case "clear_error":
       return { ...state, error: "" };
+    case "signout":
+      return { token: null, error: "" };
     default:
       return state;
   }
@@ -89,11 +92,15 @@ const signin =
   };
 
 //signout action
-const signout = (dispatch) => {
-  return ({ email, Password }) => {
-    //Make api request to sign out
-    //Modify state that we are authenticated
-  };
+const signout = (dispatch) => async () => {
+  //Remove local Token
+  await AsyncStorage.removeItem("token");
+
+  //Modify state token = null
+  dispatch({ type: "signout" });
+
+  //Navigate to AuthFLow
+  navigationRef.navigate("AuthFlow");
 };
 
 export const { Provider, Context } = createDataContext(
