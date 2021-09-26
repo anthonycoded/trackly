@@ -29,7 +29,9 @@ const AuthForm = ({ headerText, error, onSubmit, buttonText }) => {
         />
       </View>
 
-      {error ? <Text>{error}</Text> : null}
+      {error ? (
+        <Text style={{ color: "red", marginBottom: 5 }}>{error}</Text>
+      ) : null}
       <Button
         title={buttonText}
         onPress={() => onSubmit({ email, password })}
