@@ -21,7 +21,7 @@ function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Auth"
+            name="AuthFlow"
             component={AuthNavigator}
             options={{ headerShown: false }}
           />
