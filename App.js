@@ -6,18 +6,20 @@ import { Provider as AuthProvider } from "./src/context/authContext";
 import AuthNavigator from "./src/navigation/AuthNavigator";
 import BottomTabNavigator from "./src/navigation/BottomTabNavigator";
 import { navigationRef } from "./src/navigationRef";
+import LoadingScreen from "./src/screens/LoadingScreen";
+
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <AuthProvider>
       <NavigationContainer screenOptions={{}} ref={navigationRef}>
-        <Stack.Navigator
-          initialRouteName="Search"
-          screenOptions={{
-            headerTitle: "Food Spot Search",
-          }}
-        >
+        <Stack.Navigator initialRouteName="Loading">
+          <Stack.Screen
+            name="Loading"
+            component={LoadingScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Auth"
             component={AuthNavigator}
